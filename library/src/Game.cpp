@@ -48,17 +48,17 @@ void Game::newGame() {
     else
         player2Unit=1;
 
-    player1SmPtr= static_cast<const shared_ptr<Player>>(new HumanPlayer(1, chooseSide1, nullptr, tempNamePlayer1));
+    player1SmPtr = std::shared_ptr<Player>(new HumanPlayer(1, chooseSide1, nullptr, tempNamePlayer1));
     if(whoIsPlayer2==1)
     {
 
-        player2SmPtr= static_cast<const shared_ptr<Player>>(new HumanPlayer(1, player2Unit, nullptr, tempNamePlayer2));
+        player2SmPtr= shared_ptr<Player>(new HumanPlayer(1, player2Unit, nullptr, tempNamePlayer2));
 
     }
     if(whoIsPlayer2==2)
     {
 
-        player2SmPtr= static_cast<const shared_ptr<Player>>(new ComputerPlayer(0,player2Unit,nullptr));
+        player2SmPtr= shared_ptr<Player>(new ComputerPlayer(0,player2Unit,nullptr));
     }
     //Tworzenie graczy************************************************************************
 
@@ -68,21 +68,21 @@ void Game::newGame() {
     unitPtr newWolf;
     if(!(player1SmPtr->isWolf1())) {
         for (int i = 0; i < 4; i++) {
-            newSheeps.push_back(static_cast<const shared_ptr<Unit>>(new Sheep("SHEEP", nullptr, player1SmPtr, i+1)));
+            newSheeps.push_back(shared_ptr<Unit>(new Sheep("SHEEP", nullptr, player1SmPtr, i+1)));
             player1SmPtr->addUnit(newSheeps[i]);
         }
 
-         newWolf = static_cast<const shared_ptr<Unit>>(new Wolf("WOLF", nullptr, player2SmPtr));
+         newWolf = shared_ptr<Unit>(new Wolf("WOLF", nullptr, player2SmPtr));
         player2SmPtr->addUnit(newWolf);
     }
     else
     {
         for (int i = 0; i < 4; i++) {
-            newSheeps.push_back(static_cast<const shared_ptr<Unit>>(new Sheep("SHEEP", nullptr, player2SmPtr, i+1)));
+            newSheeps.push_back( shared_ptr<Unit>(new Sheep("SHEEP", nullptr, player2SmPtr, i+1)));
             player2SmPtr->addUnit(newSheeps[i]);
         }
 
-        newWolf = static_cast<const shared_ptr<Unit>>(new Wolf("WOLF", nullptr, player1SmPtr));
+        newWolf = shared_ptr<Unit>(new Wolf("WOLF", nullptr, player1SmPtr));
         player1SmPtr->addUnit(newWolf);
     }
     //Tworzenie jednostek********************************************************************

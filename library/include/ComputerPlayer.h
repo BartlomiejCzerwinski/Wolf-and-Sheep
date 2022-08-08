@@ -1,7 +1,3 @@
-//
-// Created by student on 03.06.2022.
-//
-
 #ifndef GRA_NA_PROJEKT_COMPUTERPLAYER_H
 #define GRA_NA_PROJEKT_COMPUTERPLAYER_H
 #include "Player.h"
