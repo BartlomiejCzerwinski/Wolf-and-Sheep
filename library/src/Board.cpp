@@ -14,37 +14,32 @@ Board::~Board() {
 Board::Board(int size) : size(size) {
     int tempx=1,tempy=1;
     srand(time(NULL));
-    bool whatColor=0;
+    bool fieldColorIsWhite=0;
     for(int i=1;i<=size;i++)
     {
-        if(whatColor)
+        if(fieldColorIsWhite)
         {
-//            fieldPtr bf = make_shared<BlackField>(1,tempx,tempy,nullptr,0);
             fieldsTable.push_back(make_shared<BlackField>(1,tempx,tempy,nullptr,0));
-            whatColor=false;
+            fieldColorIsWhite=false;
        tempx++;
         }
         else
         {
             fieldsTable.push_back(make_shared<WhiteField>(0, tempx, tempy,nullptr));
-            whatColor=true;
+            fieldColorIsWhite=true;
             tempx++;
         }
         if(i%8==0)
         {
             tempx=1;
             tempy+=1;
-            if(whatColor)
-                whatColor=0;
+            if(fieldColorIsWhite)
+                fieldColorIsWhite= false;
             else
-                whatColor=1;
+                fieldColorIsWhite=true;
         }
     }
 
-}
-
-int Board::getSize() const {
-    return size;
 }
 
 const std::vector<fieldPtr> &Board::getFieldsTable() const {

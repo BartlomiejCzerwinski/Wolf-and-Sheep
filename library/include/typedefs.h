@@ -26,4 +26,4 @@ typedef std::shared_ptr<UserInterface> userInterfacePtr;
 typedef std::shared_ptr<WhiteField> whiteFieldPtr;
 typedef std::shared_ptr<BlackField> blackFieldPtr;
 
-#endif //GRA_NA_PROJEKT_TYPEDEFS_H
+#endif

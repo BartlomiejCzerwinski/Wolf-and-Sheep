@@ -13,8 +13,7 @@ public:
 
     void availableMoves();
 
-
 };
 
 
-#endif //GRA_NA_PROJEKT_WOLF_H
+#endif

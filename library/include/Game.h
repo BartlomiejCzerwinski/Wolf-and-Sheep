@@ -24,11 +24,8 @@ private:
     boardPtr boardSmPtr;
     dataContainerPtr dataContainerSmPtr;
     bool whoseTurn;
-    //menuPtr menuSmPtr= new Menu;
 
 public:
-   /* Game(const playerPtr &player1SmPtr, const playerPtr &player2SmPtr, const boardPtr &boardSmPtr,
-         const dataContainerPtr &dataContainerSmPtr);*/
 Game* getwsk();
     void newGame();
     void theGame();
@@ -53,4 +50,4 @@ void creatingGameFromFile();
 };
 
 
-#endif //CARRENTAL_GAME_H
+#endif

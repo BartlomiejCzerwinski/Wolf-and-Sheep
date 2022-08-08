@@ -20,8 +20,7 @@ public:
 
     virtual ~DataContainer();
 
-
 };
 
 
-#endif //GRA_NA_PROJEKT_DATACONTAINER_H
+#endif

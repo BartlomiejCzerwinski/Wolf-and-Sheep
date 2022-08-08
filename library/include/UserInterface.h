@@ -17,4 +17,4 @@ public:
 };
 
 
-#endif //GRA_NA_PROJEKT_USERINTERFACE_H
+#endif

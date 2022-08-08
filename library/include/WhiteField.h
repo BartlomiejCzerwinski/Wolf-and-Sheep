@@ -15,9 +15,7 @@ public:
 
     bool drawBonusMove();
 
-
-
 };
 
 
-#endif //GRA_NA_PROJEKT_WHITEFIELD_H
+#endif

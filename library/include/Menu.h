@@ -12,4 +12,4 @@ public:
 };
 
 
-#endif //GRA_NA_PROJEKT_MENU_H
+#endif

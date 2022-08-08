@@ -19,8 +19,6 @@ public:
 
     virtual ~Board();
 
-    int getSize() const;
-
     const std::vector<fieldPtr> &getFieldsTable() const;
 
 };

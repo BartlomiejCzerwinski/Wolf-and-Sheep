@@ -14,9 +14,7 @@ public:
     int getSheepId() const;
 
     void availableMoves();
-
-
 };
 
 
-#endif //GRA_NA_PROJEKT_SHEEP_H
+#endif

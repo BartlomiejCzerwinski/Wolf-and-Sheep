@@ -11,7 +11,7 @@
 #include "json.hpp"
 using json = nlohmann::json;
 void Game::settingDataCOntainer(){
-dataContainerSmPtr= static_cast<const shared_ptr<DataContainer>>(new DataContainer(static_cast<const gamePtr>(this)));
+dataContainerSmPtr= shared_ptr<DataContainer>(new DataContainer(static_cast<const gamePtr>(this)));
 };
 
 void Game::newGame() {

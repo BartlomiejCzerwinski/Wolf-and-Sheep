@@ -5,7 +5,6 @@
 #include "WhiteField.h"
 
 bool WhiteField::drawBonusMove() {
-//std::cout<<"Biale pole nie losuje bonusowego ruchu - jednostka nie moze zostac na nim umieszczona"<<std::endl;
 return 0;
 }
 

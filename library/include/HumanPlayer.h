@@ -21,4 +21,4 @@ public:
 };
 
 
-#endif //GRA_NA_PROJEKT_HUMANPLAYER_H
+#endif

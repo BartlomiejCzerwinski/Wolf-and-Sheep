@@ -10,7 +10,6 @@ BOOST_AUTO_TEST_SUITE(BoardGettersAndSettersTest)
 
     BOOST_AUTO_TEST_CASE(BoardGettersTest) {
         boardPtr b = make_shared<Board>(64);
-        BOOST_CHECK_EQUAL(b->getSize(), 64);
         BOOST_CHECK_EQUAL(b->getFieldsTable()[0]->getUnitSmPtr(), nullptr);
         BOOST_CHECK_EQUAL(b->getFieldsTable()[0]->isTaken1(), 0);
         BOOST_CHECK_EQUAL(b->getFieldsTable()[0]->getCoordinateX(), 1);
