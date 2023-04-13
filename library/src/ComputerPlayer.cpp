@@ -1,11 +1,5 @@
-//
-// Created by student on 03.06.2022.
-//
-
 #include "ComputerPlayer.h"
-#include <vector>
 #include "Board.h"
-#include "Sheep.h"
 
 ComputerPlayer::~ComputerPlayer() {
 
@@ -16,8 +10,8 @@ const std::string &ComputerPlayer::getPlayerName() const {
 }
 
 void ComputerPlayer::move(){
-    std::cout<<"* KOMPUTER SIE RUSZA *"<<std::endl;
-    PolaWilka:
+    std::cout<<"* COMPUTER IS MOVING *"<<std::endl;
+    WolfFields:
     if (isWolf1() == true) {
         int temp;
 
@@ -33,45 +27,45 @@ void ComputerPlayer::move(){
         }
         getPlayerUnits()[0]->availableMoves();
 
-        unsigned int decyzjaOruchu = rand() % getPlayerUnits()[0]->getPolaNaKtoreMozeWejscJednostka().size() + 1;
+        unsigned int moveDecision = rand() % getPlayerUnits()[0]->getFieldsThatUnitCanStandOn().size() + 1;
 
-        getBoardSmPtr()->getFieldsTable()[temp]->getUnitSmPtr()->setUnitsField(getBoardSmPtr()->getFieldsTable()[temp]->getUnitSmPtr()->getPolaNaKtoreMozeWejscJednostka()[decyzjaOruchu - 1]);
-        getBoardSmPtr()->getFieldsTable()[temp]->getUnitSmPtr()->getPolaNaKtoreMozeWejscJednostka()[decyzjaOruchu - 1]->setUnitSmPtr(getPlayerUnits()[0]);
+        getBoardSmPtr()->getFieldsTable()[temp]->getUnitSmPtr()->setUnitsField(getBoardSmPtr()->getFieldsTable()[temp]->getUnitSmPtr()->getFieldsThatUnitCanStandOn()[moveDecision - 1]);
+        getBoardSmPtr()->getFieldsTable()[temp]->getUnitSmPtr()->getFieldsThatUnitCanStandOn()[moveDecision - 1]->setUnitSmPtr(getPlayerUnits()[0]);
         getBoardSmPtr()->getFieldsTable()[temp]->setUnitSmPtr(nullptr);
 
-        getPlayerUnits()[0]->polaNaKtoreMozeWejscJednostka_Clear();
+        getPlayerUnits()[0]->clearFieldsThatUnitCanStandOn();
 
         if(getPlayerUnits()[0]->getUnitsField()->drawBonusMove())
         {
-            goto PolaWilka;
+            goto WolfFields;
         }
 
     }
     else
     {
-        wyborOwieczki:
-        unsigned int wyborOwcy = rand() % getPlayerUnits().size() + 1;
+        SheepMove:
+        unsigned int selectedSheep = rand() % getPlayerUnits().size() + 1;
 
-        int iOwcy;
+        int iSheep;
         for (int i = 0; i < 64; i++) {
-            if (getBoardSmPtr()->getFieldsTable()[i]->getUnitSmPtr() == getPlayerUnits()[wyborOwcy - 1]) {
-                iOwcy = i;
+            if (getBoardSmPtr()->getFieldsTable()[i]->getUnitSmPtr() == getPlayerUnits()[selectedSheep - 1]) {
+                iSheep = i;
             }
         }
 
-        getPlayerUnits()[wyborOwcy - 1]->availableMoves();
-        unsigned int decyzjaORuchu = rand() % getPlayerUnits()[wyborOwcy -1]->getPolaNaKtoreMozeWejscJednostka().size() + 1;
+        getPlayerUnits()[selectedSheep - 1]->availableMoves();
+        unsigned int moveDecision = rand() % getPlayerUnits()[selectedSheep -1]->getFieldsThatUnitCanStandOn().size() + 1;
 
-        getBoardSmPtr()->getFieldsTable()[iOwcy]->getUnitSmPtr()->setUnitsField(getPlayerUnits()[wyborOwcy - 1]->getPolaNaKtoreMozeWejscJednostka()[decyzjaORuchu - 1]);
-        getPlayerUnits()[wyborOwcy - 1]->getPolaNaKtoreMozeWejscJednostka()[decyzjaORuchu - 1]->setUnitSmPtr(getPlayerUnits()[wyborOwcy - 1]);
-        getBoardSmPtr()->getFieldsTable()[iOwcy]->setUnitSmPtr(nullptr);
+        getBoardSmPtr()->getFieldsTable()[iSheep]->getUnitSmPtr()->setUnitsField(getPlayerUnits()[selectedSheep - 1]->getFieldsThatUnitCanStandOn()[moveDecision - 1]);
+        getPlayerUnits()[selectedSheep - 1]->getFieldsThatUnitCanStandOn()[moveDecision - 1]->setUnitSmPtr(getPlayerUnits()[selectedSheep - 1]);
+        getBoardSmPtr()->getFieldsTable()[iSheep]->setUnitSmPtr(nullptr);
 
 
-        getPlayerUnits()[wyborOwcy - 1]->polaNaKtoreMozeWejscJednostka_Clear();
+        getPlayerUnits()[selectedSheep - 1]->clearFieldsThatUnitCanStandOn();
 
-        if(getPlayerUnits()[wyborOwcy - 1]->getUnitsField()->drawBonusMove())
+        if(getPlayerUnits()[selectedSheep - 1]->getUnitsField()->drawBonusMove())
         {
-            goto wyborOwieczki;
+            goto SheepMove;
         }
     }
 }

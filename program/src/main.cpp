@@ -1,10 +1,6 @@
 #include <iostream>
 #include "Game.h"
-#include "Field.h"
-#include "Board.h"
 #include "Menu.h"
-#include "typedefs.h"
-#include "UserInterface.h"
 #include <time.h>
 
 
@@ -14,23 +10,23 @@ using namespace std;
 int main() {
     srand(time(NULL));
 
-Menu *menuwsk=new Menu;
-Game *wskaznikgame = new Game();
-wskaznikgame->settingDataCOntainer();
+Menu *menuPtr=new Menu;
+Game *gamePtr = new Game();
+gamePtr->settingDataCOntainer();
 
 menuReturn:
-int menuSwitch=menuwsk->options();
+int menuSwitch=menuPtr->options();
 
     switch(menuSwitch)
     {
         case 1:
-            wskaznikgame->newGame();
-            wskaznikgame->theGame();
+            gamePtr->newGame();
+            gamePtr->theGame();
             break;
 
         case 2:
-            wskaznikgame->creatingGameFromFile();
-            wskaznikgame->theGame();
+            gamePtr->creatingGameFromFile();
+            gamePtr->theGame();
             break;
 
         case 3:
@@ -45,10 +41,6 @@ int menuSwitch=menuwsk->options();
             exit(0);
             break;
     }
-
-
-
-
 
     return 0;
 }

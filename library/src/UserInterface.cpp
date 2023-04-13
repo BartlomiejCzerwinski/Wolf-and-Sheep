@@ -1,7 +1,3 @@
-//
-// Created by student on 03.06.2022.
-//
-
 #include "UserInterface.h"
 
 void::UserInterface::drawBoard(){
@@ -20,10 +16,10 @@ void::UserInterface::drawBoard(){
                if(boardPtrTable->getFieldsTable()[i]->getUnitSmPtr()->getUnitType()=="WOLF")
                    std::cout<<"W"<<" ";
                else
-                  std::cout<<"O"<<" ";
+                  std::cout<<"S"<<" ";
            }
            else
-               cout<<"X"<<" ";
+               cout<<"-"<<" ";
         }
         else
             std::cout<<" "<<" ";

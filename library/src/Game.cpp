@@ -1,7 +1,3 @@
-//
-// Created by student on 03.06.2022.
-//
-
 #include "Game.h"
 #include "typedefs.h"
 #include "Field.h"
@@ -9,36 +5,37 @@
 #include "HumanPlayer.h"
 #include "ComputerPlayer.h"
 #include "json.hpp"
+
 using json = nlohmann::json;
+
 void Game::settingDataCOntainer(){
 dataContainerSmPtr= shared_ptr<DataContainer>(new DataContainer(static_cast<const gamePtr>(this)));
-};
+}
 
 void Game::newGame() {
-
     whoseTurn=0;
-    //Tworzenie graczy************************************************************************
-    std::cout<<"__________ TWORZENIE NOWEJ GRY __________"<<std::endl;
-    std::cout<<"GRACZ 1:"<<std::endl;
+
+    std::cout<<"__________ CREATING NEW GAME __________"<<std::endl;
+    std::cout<<"PLAYER 1:"<<std::endl;
     std::string tempNamePlayer1;
-    std::cout<<"Podaj imie gracza:"<<std::endl;
+    std::cout<<"Emter player name:"<<std::endl;
     std::cin>>tempNamePlayer1;
     unsigned int chooseSide1;
     while(chooseSide1!=1&&chooseSide1!=2) {
-        std::cout << "Wybierz strone: 1.Owce ; 2.Wilk" << std::endl;
+        std::cout << "Choose side: 1.Sheeps ; 2.Wolf" << std::endl;
         std::cin>>chooseSide1;
         if(chooseSide1!=1&&chooseSide1!=2)
-            std::cout<<"PROSZE WYBRAC WLASCIWA OPCJE!!!"<<std::endl;
+            std::cout<<"NO SUCH OPTION !!!"<<std::endl;
     }
     chooseSide1--;
-    std::cout<<"GRACZ 2:"<<std::endl;
+    std::cout<<"PLAYER 2:"<<std::endl;
     unsigned int whoIsPlayer2;
-    std::cout<<"Gracz jest innym graczem czy komputerem? (1.gracz 2.komputer):"<<std::endl;
+    std::cout<<"Is human player or computer player? (1.human 2.computer):"<<std::endl;
     std::cin>>whoIsPlayer2;
     std::string tempNamePlayer2;
     if(whoIsPlayer2==1)
     {
-        std::cout<<"Podaj imie gracza:"<<std::endl;
+        std::cout<<"Enter player name:"<<std::endl;
         std::cin>>tempNamePlayer2;
     }
 
@@ -51,18 +48,12 @@ void Game::newGame() {
     player1SmPtr = std::shared_ptr<Player>(new HumanPlayer(1, chooseSide1, nullptr, tempNamePlayer1));
     if(whoIsPlayer2==1)
     {
-
         player2SmPtr= shared_ptr<Player>(new HumanPlayer(1, player2Unit, nullptr, tempNamePlayer2));
-
     }
     if(whoIsPlayer2==2)
     {
-
         player2SmPtr= shared_ptr<Player>(new ComputerPlayer(0,player2Unit,nullptr));
     }
-    //Tworzenie graczy************************************************************************
-
-    //Tworzenie jednostek********************************************************************
 
     std::vector<unitPtr> newSheeps;
     unitPtr newWolf;
@@ -81,17 +72,13 @@ void Game::newGame() {
             newSheeps.push_back( shared_ptr<Unit>(new Sheep("SHEEP", nullptr, player2SmPtr, i+1)));
             player2SmPtr->addUnit(newSheeps[i]);
         }
-
         newWolf = shared_ptr<Unit>(new Wolf("WOLF", nullptr, player1SmPtr));
         player1SmPtr->addUnit(newWolf);
     }
-    //Tworzenie jednostek********************************************************************
 
-    //Tworzenie planszy************************************************************************
     boardSmPtr= std::make_shared<Board>(64);
     player1SmPtr->setBoardSmPtr(boardSmPtr);
     player2SmPtr->setBoardSmPtr(boardSmPtr);
-    //Tworzenie planszy************************************************************************
 
     int temp=1;
     for (int i = 0; i < 4; i++) {
@@ -101,27 +88,27 @@ void Game::newGame() {
 
         temp+=2;
     }
-    unsigned int wyborPozycjiWilka;
+    unsigned int wolfPositionChoose;
     if(whoIsPlayer2==2&&player1SmPtr->isWolf1()==0){
         srand(time(NULL));
-        wyborPozycjiWilka=rand() % 4 + 1;
-        goto pomininterakcjegracza;
-    }//************************************
-    std::cout<<"Wybierz pole startowe dla Wilka:"<<std::endl;
+        wolfPositionChoose=rand() % 4 + 1;
+        goto skipPlayerInteraction;
+    }
+    std::cout<<"Select Wolf starting position:"<<std::endl;
     std::cout<<"1. ( 1 ; 8 )"<<std::endl;
     std::cout<<"2. ( 3 ; 8 )"<<std::endl;
     std::cout<<"3. ( 5 ; 8 )"<<std::endl;
     std::cout<<"4. ( 7 ; 8 )"<<std::endl;
-    std::cin>>wyborPozycjiWilka;
-    while((wyborPozycjiWilka < 1 || wyborPozycjiWilka > 4) || cin.fail())
+    std::cin>>wolfPositionChoose;
+    while((wolfPositionChoose < 1 || wolfPositionChoose > 4) || cin.fail())
     {
-        cout << "Podaj prawidlowa opcje!" << endl;
+        cout << "NO SUCH OPTION!!!" << endl;
         std::cin.clear();
         std::cin.ignore(256, '\n');
-        std::cin >> wyborPozycjiWilka;
+        std::cin >> wolfPositionChoose;
     }
-    pomininterakcjegracza:
-    switch(wyborPozycjiWilka)
+    skipPlayerInteraction:
+    switch(wolfPositionChoose)
     {
         case 1:
             newWolf->setUnitsField((const shared_ptr<Field> &) boardSmPtr->getFieldsTable()[56]);
@@ -142,48 +129,43 @@ void Game::newGame() {
             newWolf->setUnitsField((const shared_ptr<Field> &) boardSmPtr->getFieldsTable()[62]);
             boardSmPtr->getFieldsTable()[62]->setUnitSmPtr(newWolf);
             break;
-
-
-
-
     }
 
 }
 void Game::theGame() {
     int a;
-    UserInterface interfejs(boardSmPtr);
+    UserInterface userInterface(boardSmPtr);
     while (1) {
-//*************************************************************
         if (whoseTurn == 0) {
-            wykonajRuchGracza1:
-            cout << "Ruch gracza: " + player1SmPtr->getPlayerName() << endl;
-            interfejs.drawBoard();
+            player1Move:
+            cout << "Player's move: " + player1SmPtr->getPlayerName() << endl;
+            userInterface.drawBoard();
             try
             {
                 player1SmPtr->move();
             }
             catch(std::runtime_error & e)
             {
-               cout << e.what() << " Wykonaj ruch jeszcze raz!" << endl;
+               cout << e.what() << "Make a move again!" << endl;
                 std::cin.clear();
                 std::cin.ignore(256, '\n');
-               goto wykonajRuchGracza1;
+               goto player1Move;
             }
                 int bla = 0;
-                czyZapisac1:
+                isSave:
                 try {
-                    cout << "Jesli chcesz zapisac gre i wyjsc wpisz 1, jesli chcesz grac dalej wpisz 2: ";
+                    cout << "If you want to save the game and leave enter 1. If you want to play enter 2: ";
                     std::cin >> bla;
                     while ((bla != 1 && bla != 2) || cin.fail()) {
-                        throw std::runtime_error("Podano zly argument.");
+                        throw std::runtime_error("Wrong argument");
                     }
                 }
             catch(std::runtime_error & e)
             {
-                    cout << e.what() << " Podaj prawidlowa opcje!" << endl;
+                    cout << e.what() << "Choose correct option!" << endl;
                     std::cin.clear();
                     std::cin.ignore(256, '\n');
-                    goto czyZapisac1;
+                    goto isSave;
             }
             if(bla == 1)
             {
@@ -195,36 +177,35 @@ void Game::theGame() {
         else
         {
 
-//*************************************************************
-            wykonajRuchGracza2:
-            cout << "Ruch gracza: " + player2SmPtr->getPlayerName() << endl;
-            interfejs.drawBoard();
+            player2Move:
+            cout << "Player's move: " + player2SmPtr->getPlayerName() << endl;
+            userInterface.drawBoard();
             try
             {
                 player2SmPtr->move();
             }
             catch(std::runtime_error & e)
             {
-                cout << e.what() << " Wykonaj ruch jeszcze raz!" << endl;
+                cout << e.what() << "Make a move again!" << endl;
                 std::cin.clear();
                 std::cin.ignore(256, '\n');
-                goto wykonajRuchGracza2;
+                goto player2Move;
             }
             int bla = 0;
-            czyZapisac2:
+            isSave2:
             try {
-                cout << "Jesli chcesz zapisac gre i wyjsc wpisz 1, jesli chcesz grac dalej wpisz 2: ";
+                cout << "If you want to save the game and leave enter 1. If you want to play enter 2: ";
                 std::cin >> bla;
                 while ((bla != 1 && bla != 2) || cin.fail()) {
-                    throw std::runtime_error("Podano zly argument.");
+                    throw std::runtime_error("Wrong argument");
                 }
             }
             catch(std::runtime_error & e)
             {
-                cout << e.what() << " Podaj prawidlowa opcje!" << endl;
+                cout << e.what() << "Choose correct option!" << endl;
                 std::cin.clear();
                 std::cin.ignore(256, '\n');
-                goto czyZapisac2;
+                goto isSave2;
             }
             if(bla == 1)
             {
@@ -232,7 +213,6 @@ void Game::theGame() {
             }
             winConditions();
             whoseTurn=0;
-            //***************************
         }
     }
     }
@@ -243,7 +223,7 @@ void Game::winConditions() {
     {
         if(boardSmPtr->getFieldsTable()[1]->getUnitSmPtr()->getUnitType() == "WOLF")
         {
-            std::cout << "KONIEC GRY. WILK WYGRYWA!";
+            std::cout << "THE GAME HAS ENDED. WOLF WINS!";
             exit(0);
         }
     }
@@ -251,7 +231,7 @@ void Game::winConditions() {
     {
         if(boardSmPtr->getFieldsTable()[3]->getUnitSmPtr()->getUnitType() == "WOLF")
         {
-            std::cout << "KONIEC GRY. WILK WYGRYWA!";
+            std::cout << "THE GAME HAS ENDED. WOLF WINS!";
             exit(0);
         }
     }
@@ -259,7 +239,7 @@ void Game::winConditions() {
     {
         if(boardSmPtr->getFieldsTable()[5]->getUnitSmPtr()->getUnitType() == "WOLF")
         {
-            std::cout << "KONIEC GRY. WILK WYGRYWA!";
+            std::cout << "THE GAME HAS ENDED. WOLF WINS!";
             exit(0);
         }
     }
@@ -267,83 +247,83 @@ void Game::winConditions() {
     {
         if(boardSmPtr->getFieldsTable()[7]->getUnitSmPtr()->getUnitType() == "WOLF")
         {
-            std::cout << "KONIEC GRY. WILK WYGRYWA!";
+            std::cout << "THE GAME HAS ENDED. WOLF WINS!";
             exit(0);
         }
     }
-    int licznik1 = 0;
-    int licznik2 = 0;
+    int counter1 = 0;
+    int counter2 = 0;
     for(int i=0;i<getPlayer1SmPtr()->getPlayerUnits().size();i++)
     {
         if(getPlayer1SmPtr()->isWolf1())
             getPlayer1SmPtr()->getPlayerUnits()[i]->availableMoves();
-        if(getPlayer1SmPtr()->getPlayerUnits()[i]->getPolaNaKtoreMozeWejscJednostka().empty())
+        if(getPlayer1SmPtr()->getPlayerUnits()[i]->getFieldsThatUnitCanStandOn().empty())
         {
-            licznik1++;
+            counter1++;
         }
         if(!getPlayer1SmPtr()->isWolf1())
             getPlayer1SmPtr()->getPlayerUnits()[i]->availableMoves();
-        if(getPlayer1SmPtr()->getPlayerUnits()[i]->getPolaNaKtoreMozeWejscJednostka().empty())
+        if(getPlayer1SmPtr()->getPlayerUnits()[i]->getFieldsThatUnitCanStandOn().empty())
         {
-            licznik2++;
+            counter2++;
         }
-        getPlayer1SmPtr()->getPlayerUnits()[i]->polaNaKtoreMozeWejscJednostka_Clear();
+        getPlayer1SmPtr()->getPlayerUnits()[i]->clearFieldsThatUnitCanStandOn();
     }
-    if(licznik1 == 1)
+    if(counter1 == 1)
     {
-        std::cout << "KONIEC GRY, WILK NIE MA RUCHU. OWCE WYGRYWAJA!";
+        std::cout << "THE GAME HAS ENDED, WOLF HAS NO MOVES. SHEEP WIN!";
         exit(0);
     }
-    if(licznik2 == 4)
+    if(counter2 == 4)
     {
-        std::cout << "KONIEC GRY, OWCE NIE MAJA RUCHU. WILK WYGRYWA!";
+        std::cout << "THE GAME HAS ENDED, SHEEP HAS NO MOVES. WOLF WIN!";
         exit(0);
     }
-    licznik1 = 0;
-    licznik2 = 0;
+    counter1 = 0;
+    counter2 = 0;
     for(int i=0;i<getPlayer2SmPtr()->getPlayerUnits().size();i++)
     {
         if(getPlayer2SmPtr()->isWolf1())
             getPlayer2SmPtr()->getPlayerUnits()[i]->availableMoves();
-        if(getPlayer2SmPtr()->getPlayerUnits()[i]->getPolaNaKtoreMozeWejscJednostka().empty())
+        if(getPlayer2SmPtr()->getPlayerUnits()[i]->getFieldsThatUnitCanStandOn().empty())
         {
-            licznik1++;
+            counter1++;
         }
         if(!getPlayer2SmPtr()->isWolf1())
             getPlayer2SmPtr()->getPlayerUnits()[i]->availableMoves();
-        if(getPlayer2SmPtr()->getPlayerUnits()[i]->getPolaNaKtoreMozeWejscJednostka().empty())
+        if(getPlayer2SmPtr()->getPlayerUnits()[i]->getFieldsThatUnitCanStandOn().empty())
         {
-            licznik2++;
+            counter2++;
         }
-        getPlayer2SmPtr()->getPlayerUnits()[i]->polaNaKtoreMozeWejscJednostka_Clear();
+        getPlayer2SmPtr()->getPlayerUnits()[i]->getFieldsThatUnitCanStandOn();
     }
-    if(licznik1 == 1)
+    if(counter1 == 1)
     {
-        std::cout << "KONIEC GRY, WILK NIE MA RUCHU. OWCE WYGRYWAJA!";
+        std::cout << "THE GAME HAS ENDED, WOLF HAS NO MOVES. SHEEP WIN!";
         exit(0);
     }
-    if(licznik2 == 4)
+    if(counter2 == 4)
     {
-        std::cout << "KONIEC GRY, OWCE NIE MAJA RUCHU. WILK WYGRYWA!";
+        std::cout << "THE GAME HAS ENDED, SHEEP HAS NO MOVES. WOLF WIN!";
         exit(0);
     }
 }
 
 void Game::creatingGameFromFile() {
     player1SmPtr= static_cast<const shared_ptr<Player>>(new HumanPlayer(0, 0, nullptr, ""));
-    ifstream wczytajGre;
-    ponownePodanieNazwySavea:
+    ifstream loadGame;
+    enterSaveNameAgain:
     std::string saveName;
-    std::cout<<"Podaj nazwe pliku z zapisanym stanem gry: "<<std::endl;
+    std::cout<<"Enter save name: "<<std::endl;
     cin>>saveName;
-    wczytajGre.open(saveName);
-    if(wczytajGre.good()==false)
+    loadGame.open(saveName);
+    if(loadGame.good()==false)
     {
-        std::cout<<"Podane niepoprawna nazwe pliku!"<<std::endl<<"Prosze podac poprawna nazwe pliku."<<std::endl;
-        goto ponownePodanieNazwySavea;
+        std::cout<<"Wrong save name"<<std::endl<<"Please, enter correct one."<<std::endl;
+        goto enterSaveNameAgain;
     }
     json j;
-    wczytajGre>>j;
+    loadGame>>j;
     bool p1ih,p1iw,p2ih,p2iw,wt;
     std::string p1n,p2n;
     int s1x,s1y,s2x,s2y,s3x,s3y,s4x,s4y,wx,wy;
@@ -385,7 +365,7 @@ void Game::creatingGameFromFile() {
     std::cout<<"wolf x:"<<wx<<std::endl;
     std::cout<<"wolf y:"<<wy<<std::endl;
 
-    wczytajGre.close();
+    loadGame.close();
     player1SmPtr->setIsHuman(p1ih);
     player1SmPtr->setIsWolf(p1iw);
     player1SmPtr->setPlayerName(p1n);
@@ -401,7 +381,7 @@ void Game::creatingGameFromFile() {
     player2SmPtr->setIsWolf(p2iw);
     std::vector<unitPtr> newSheeps;
     unitPtr newWolf;
-    //**********************************************
+
     if(!(player1SmPtr->isWolf1())) {
         for (int i = 0; i < 4; i++) {
             newSheeps.push_back(static_cast<const shared_ptr<Unit>>(new Sheep("SHEEP", nullptr, player1SmPtr, i+1)));
@@ -421,12 +401,11 @@ void Game::creatingGameFromFile() {
         newWolf = static_cast<const shared_ptr<Unit>>(new Wolf("WOLF", nullptr, player1SmPtr));
         player1SmPtr->addUnit(newWolf);
     }
-//**********************************************
+
     boardSmPtr= std::make_shared<Board>(64);
     player1SmPtr->setBoardSmPtr(boardSmPtr);
     player2SmPtr->setBoardSmPtr(boardSmPtr);
     int Q=0;
-
 
     for(int a=0;a<64;a++)
     {
@@ -543,10 +522,6 @@ const playerPtr &Game::getPlayer2SmPtr() const {
 
 const boardPtr &Game::getBoardSmPtr() const {
     return boardSmPtr;
-}
-
-const dataContainerPtr &Game::getDataContainerSmPtr() const {
-    return dataContainerSmPtr;
 }
 
 bool Game::isWhoseTurn() const {

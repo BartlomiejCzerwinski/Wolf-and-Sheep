@@ -4,7 +4,6 @@
 #include "Player.h"
 #include <string>
 
-
 class HumanPlayer : public Player {
 private:
     std::string playerName;
@@ -19,6 +18,5 @@ public:
 
     void setPlayerName(const std::string &playerName);
 };
-
 
 #endif

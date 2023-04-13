@@ -17,6 +17,7 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+
 class Game {
 private:
     playerPtr player1SmPtr;

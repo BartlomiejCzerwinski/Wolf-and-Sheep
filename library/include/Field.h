@@ -5,6 +5,7 @@
 #include "typedefs.h"
 #include "Unit.h"
 #include <string>
+
 using namespace std;
 
 class Field {
@@ -34,6 +35,5 @@ public:
 
     std::string getCoordinates();
 };
-
 
 #endif

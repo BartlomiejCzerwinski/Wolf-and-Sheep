@@ -1,7 +1,3 @@
-//
-// Created by student on 03.06.2022.
-//
-
 #include "DataContainer.h"
 #include "json.hpp"
 
@@ -56,13 +52,13 @@ void DataContainer::saveGame() {
     json jj;
     jj["a"]=j;
 
-    std::string nazwaZapisu;
-    std::cout<<"Podaj nazwe zapisu gry:"<<std::endl;
-    cin>>nazwaZapisu;
-    ofstream zapis(nazwaZapisu);
-    zapis<<jj.dump(4);
-    zapis.close();
-    std::cout<<"Pomyslnie zapisano gre!";
+    std::string saveName;
+    std::cout<<"Enter save name"<<std::endl;
+    cin>>saveName;
+    ofstream save(saveName);
+    save<<jj.dump(4);
+    save.close();
+    std::cout<<"Successfully saved game!";
     exit(0);
 }
 

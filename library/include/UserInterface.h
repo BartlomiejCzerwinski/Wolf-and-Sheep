@@ -16,5 +16,4 @@ public:
     virtual ~UserInterface();
 };
 
-
 #endif

@@ -1,16 +1,8 @@
-//
-// Created by student on 03.06.2022.
-//
-
 #include "Sheep.h"
 #include "Board.h"
 
 Sheep::~Sheep() {
 
-}
-
-int Sheep::getSheepId() const {
-    return sheepId;
 }
 
 Sheep::Sheep(const string &unitType, const fieldPtr &unitsField, const playerPtr &unitsPlayer, int sheepId) : Unit(
@@ -24,15 +16,14 @@ void Sheep::availableMoves() {
          if(i+7 < 64)
          if(getUnitsPlayer()->getBoardSmPtr()->getFieldsTable()[i+7]->isBlack1()==1)
              if(getUnitsPlayer()->getBoardSmPtr()->getFieldsTable()[i+7]->isTaken1()==0)
-         setPolaNaKtoreMozeWejscJednostka(getUnitsPlayer()->getBoardSmPtr()->getFieldsTable()[i+7]);
+         setFieldsThatUnitCanStandOn(getUnitsPlayer()->getBoardSmPtr()->getFieldsTable()[i+7]);
 
          if(i+9 < 64)
          if(getUnitsPlayer()->getBoardSmPtr()->getFieldsTable()[i+9]->isBlack1()==1)
              if(getUnitsPlayer()->getBoardSmPtr()->getFieldsTable()[i+9]->isTaken1()==0)
-                 setPolaNaKtoreMozeWejscJednostka(getUnitsPlayer()->getBoardSmPtr()->getFieldsTable()[i+9]);
+                 setFieldsThatUnitCanStandOn(getUnitsPlayer()->getBoardSmPtr()->getFieldsTable()[i+9]);
      }
  }
-
 
 }
 

@@ -1,5 +1,4 @@
 #include <boost/test/unit_test.hpp>
-
 #include "ComputerPlayer.h"
 #include "HumanPlayer.h"
 #include "Board.h"

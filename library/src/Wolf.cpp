@@ -1,7 +1,3 @@
-//
-// Created by student on 03.06.2022.
-//
-
 #include "Wolf.h"
 #include "Board.h"
 
@@ -21,21 +17,21 @@ void Wolf::availableMoves() {
             if(i+7 < 64)
             if(getUnitsPlayer()->getBoardSmPtr()->getFieldsTable()[i+7]->isBlack1()==1)
                 if(getUnitsPlayer()->getBoardSmPtr()->getFieldsTable()[i+7]->isTaken1()==0)
-                    setPolaNaKtoreMozeWejscJednostka(getUnitsPlayer()->getBoardSmPtr()->getFieldsTable()[i+7]);
+                    setFieldsThatUnitCanStandOn(getUnitsPlayer()->getBoardSmPtr()->getFieldsTable()[i+7]);
             if(i+9 < 64)
             if(getUnitsPlayer()->getBoardSmPtr()->getFieldsTable()[i+9]->isBlack1()==1)
                 if(getUnitsPlayer()->getBoardSmPtr()->getFieldsTable()[i+9]->isTaken1()==0)
-                    setPolaNaKtoreMozeWejscJednostka(getUnitsPlayer()->getBoardSmPtr()->getFieldsTable()[i+9]);
+                    setFieldsThatUnitCanStandOn(getUnitsPlayer()->getBoardSmPtr()->getFieldsTable()[i+9]);
 
             if(i-7>0)
             if(getUnitsPlayer()->getBoardSmPtr()->getFieldsTable()[i-7]->isBlack1()==1)
                 if(getUnitsPlayer()->getBoardSmPtr()->getFieldsTable()[i-7]->isTaken1()==0)
-                    setPolaNaKtoreMozeWejscJednostka(getUnitsPlayer()->getBoardSmPtr()->getFieldsTable()[i-7]);
+                    setFieldsThatUnitCanStandOn(getUnitsPlayer()->getBoardSmPtr()->getFieldsTable()[i-7]);
 
             if(i-9>0)
             if(getUnitsPlayer()->getBoardSmPtr()->getFieldsTable()[i-9]->isBlack1()==1)
                 if(getUnitsPlayer()->getBoardSmPtr()->getFieldsTable()[i-9]->isTaken1()==0)
-                    setPolaNaKtoreMozeWejscJednostka(getUnitsPlayer()->getBoardSmPtr()->getFieldsTable()[i-9]);
+                    setFieldsThatUnitCanStandOn(getUnitsPlayer()->getBoardSmPtr()->getFieldsTable()[i-9]);
         }
     }
 }

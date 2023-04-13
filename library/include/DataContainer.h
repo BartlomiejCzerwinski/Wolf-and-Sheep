@@ -6,7 +6,6 @@
 #include "typedefs.h"
 #include <fstream>
 
-
 class DataContainer {
 private:
 gamePtr ptrForGame;
@@ -19,8 +18,6 @@ public:
     DataContainer(const gamePtr &ptrForGame);
 
     virtual ~DataContainer();
-
 };
-
 
 #endif

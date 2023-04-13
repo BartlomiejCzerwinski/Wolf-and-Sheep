@@ -1,9 +1,7 @@
 #include <boost/test/unit_test.hpp>
-
 #include "ComputerPlayer.h"
 #include "HumanPlayer.h"
 #include "Board.h"
-#include "Unit.h"
 #include "Wolf.h"
 #include "Sheep.h"
 
@@ -37,8 +35,8 @@ BOOST_AUTO_TEST_SUITE(UnitGettersAndSettersTest)
         unitPtr o2 = make_shared<Sheep>("SHEEP",b->getFieldsTable()[7],hp,2);
         o1->availableMoves();
         o2->availableMoves();
-        BOOST_CHECK_EQUAL(o1->getPolaNaKtoreMozeWejscJednostka().size(), 2);
-        BOOST_CHECK_EQUAL(o2->getPolaNaKtoreMozeWejscJednostka().size(), 1);
+        BOOST_CHECK_EQUAL(o1->getFieldsThatUnitCanStandOn().size(), 2);
+        BOOST_CHECK_EQUAL(o2->getFieldsThatUnitCanStandOn().size(), 1);
 }
 
     BOOST_AUTO_TEST_CASE(WolfAvailableMovesTest){
@@ -49,7 +47,7 @@ BOOST_AUTO_TEST_SUITE(UnitGettersAndSettersTest)
         unitPtr w2 = make_shared<Wolf>("WOLF",b->getFieldsTable()[17],hp);
         w1->availableMoves();
         w2->availableMoves();
-        BOOST_CHECK_EQUAL(w1->getPolaNaKtoreMozeWejscJednostka().size(), 2);
-        BOOST_CHECK_EQUAL(w2->getPolaNaKtoreMozeWejscJednostka().size(), 4);
+        BOOST_CHECK_EQUAL(w1->getFieldsThatUnitCanStandOn().size(), 2);
+        BOOST_CHECK_EQUAL(w2->getFieldsThatUnitCanStandOn().size(), 4);
     }
 BOOST_AUTO_TEST_SUITE_END()

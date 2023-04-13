@@ -5,7 +5,6 @@
 #include "typedefs.h"
 #include <vector>
 
-
 class Player {
 private:
     bool isHuman;

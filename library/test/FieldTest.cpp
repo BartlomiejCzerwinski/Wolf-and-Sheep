@@ -1,9 +1,6 @@
 #include <boost/test/unit_test.hpp>
-
-
 #include "Board.h"
 #include "Field.h"
-#include "Unit.h"
 #include "Wolf.h"
 
 BOOST_AUTO_TEST_SUITE(FieldGettersAndSettersTest)

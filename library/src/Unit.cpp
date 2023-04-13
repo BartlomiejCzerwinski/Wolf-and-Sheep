@@ -1,7 +1,3 @@
-//
-// Created by student on 03.06.2022.
-//
-
 #include "Unit.h"
 
 
@@ -13,17 +9,13 @@ const std::string &Unit::getUnitType() const {
     return unitType;
 }
 
-
-void Unit::polaNaKtoreMozeWejscJednostka_Clear() {
-    polaNaKtoreMozeWejscJednostka.clear();
+void Unit::clearFieldsThatUnitCanStandOn() {
+    fieldsThatUnitCanStandOn.clear();
 }
-
 
 string Unit::getPositionInfo() {
 return getUnitsField()->getCoordinates();
 }
-
-
 
 const fieldPtr &Unit::getUnitsField() const {
     return unitsField;
@@ -38,22 +30,20 @@ Unit::Unit(const string &unitType, const fieldPtr &unitsField, const playerPtr &
                                                                                                unitsPlayer(
                                                                                                        unitsPlayer) {}
 
-
-
 void Unit::setUnitsField(const fieldPtr &unitsField) {
     Unit::unitsField = unitsField;
 }
 
-const vector<fieldPtr> &Unit::getPolaNaKtoreMozeWejscJednostka() const {
-    return polaNaKtoreMozeWejscJednostka;
+const vector<fieldPtr> &Unit::getFieldsThatUnitCanStandOn() const {
+    return fieldsThatUnitCanStandOn;
 }
 
 void Unit::availableMoves() {
 
 }
 
-void Unit::setPolaNaKtoreMozeWejscJednostka(fieldPtr field) {
-    polaNaKtoreMozeWejscJednostka.push_back(field);
+void Unit::setFieldsThatUnitCanStandOn(fieldPtr field) {
+    fieldsThatUnitCanStandOn.push_back(field);
 }
 
 

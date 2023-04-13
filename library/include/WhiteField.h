@@ -2,10 +2,7 @@
 #define GRA_NA_PROJEKT_WHITEFIELD_H
 
 #include <iostream>
-
 #include "Field.h"
-
-
 
 class WhiteField : public Field {
 public:
@@ -14,8 +11,6 @@ public:
     ~WhiteField();
 
     bool drawBonusMove();
-
 };
-
 
 #endif

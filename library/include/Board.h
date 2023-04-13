@@ -23,5 +23,4 @@ public:
 
 };
 
-
 #endif //GRA_NA_PROJEKT_BOARD_H

@@ -1,5 +1,6 @@
 #ifndef GRA_NA_PROJEKT_COMPUTERPLAYER_H
 #define GRA_NA_PROJEKT_COMPUTERPLAYER_H
+
 #include "Player.h"
 #include <string>
 
@@ -20,6 +21,5 @@ public:
     void setPlayerName(const std::string &playerName);
 
 };
-
 
 #endif //GRA_NA_PROJEKT_COMPUTERPLAYER_H

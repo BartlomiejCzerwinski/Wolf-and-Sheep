@@ -1,9 +1,4 @@
-//
-// Created by student on 03.06.2022.
-//
-
 #include "BlackField.h"
-#include <ctime>
 #include "Unit.h"
 
 BlackField::~BlackField() {
@@ -26,8 +21,5 @@ BlackField::BlackField(bool isBlack, int coordinateX, int coordinateY, const uni
                                        isTaken(isTaken) {
 }
 
-bool BlackField::isTaken1() const {
-    return isTaken;
-}
 
 

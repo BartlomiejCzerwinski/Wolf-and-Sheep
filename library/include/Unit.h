@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "typedefs.h"
 #include <vector>
+
 using namespace std;
 
 class Unit {
@@ -15,18 +16,18 @@ private:
     string unitType;
     fieldPtr unitsField;
     playerPtr unitsPlayer;
-    std::vector<fieldPtr> polaNaKtoreMozeWejscJednostka;
+    std::vector<fieldPtr> fieldsThatUnitCanStandOn;
 public:
     Unit(const string &unitType, const fieldPtr &unitsField, const playerPtr &unitsPlayer);
 
-    void polaNaKtoreMozeWejscJednostka_Clear();
+    void clearFieldsThatUnitCanStandOn();
 
     virtual ~Unit();
 
     const string &getUnitType() const;
     virtual string getPositionInfo();
 
-    const vector<fieldPtr> &getPolaNaKtoreMozeWejscJednostka() const;
+    const vector<fieldPtr> &getFieldsThatUnitCanStandOn() const;
 
     void setUnitsField(const fieldPtr &unitsField);
 
@@ -37,10 +38,8 @@ public:
 
     virtual void availableMoves();
 
-    void setPolaNaKtoreMozeWejscJednostka(fieldPtr field);
-
+    void setFieldsThatUnitCanStandOn(fieldPtr field);
 
 };
-
 
 #endif
