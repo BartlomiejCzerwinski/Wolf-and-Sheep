@@ -219,10 +219,13 @@ void Game::theGame() {
 
 
 void Game::winConditions() {
+    UserInterface userInterface(boardSmPtr);
+
     if(boardSmPtr->getFieldsTable()[1]->getUnitSmPtr() != nullptr)
     {
         if(boardSmPtr->getFieldsTable()[1]->getUnitSmPtr()->getUnitType() == "WOLF")
         {
+            userInterface.drawBoard();
             std::cout << "THE GAME HAS ENDED. WOLF WINS!";
             exit(0);
         }
@@ -231,6 +234,7 @@ void Game::winConditions() {
     {
         if(boardSmPtr->getFieldsTable()[3]->getUnitSmPtr()->getUnitType() == "WOLF")
         {
+            userInterface.drawBoard();
             std::cout << "THE GAME HAS ENDED. WOLF WINS!";
             exit(0);
         }
@@ -239,6 +243,7 @@ void Game::winConditions() {
     {
         if(boardSmPtr->getFieldsTable()[5]->getUnitSmPtr()->getUnitType() == "WOLF")
         {
+            userInterface.drawBoard();
             std::cout << "THE GAME HAS ENDED. WOLF WINS!";
             exit(0);
         }
@@ -247,6 +252,7 @@ void Game::winConditions() {
     {
         if(boardSmPtr->getFieldsTable()[7]->getUnitSmPtr()->getUnitType() == "WOLF")
         {
+            userInterface.drawBoard();
             std::cout << "THE GAME HAS ENDED. WOLF WINS!";
             exit(0);
         }
@@ -271,11 +277,13 @@ void Game::winConditions() {
     }
     if(counter1 == 1)
     {
+        userInterface.drawBoard();
         std::cout << "THE GAME HAS ENDED, WOLF HAS NO MOVES. SHEEP WIN!";
         exit(0);
     }
     if(counter2 == 4)
     {
+        userInterface.drawBoard();
         std::cout << "THE GAME HAS ENDED, SHEEP HAS NO MOVES. WOLF WIN!";
         exit(0);
     }
@@ -283,27 +291,30 @@ void Game::winConditions() {
     counter2 = 0;
     for(int i=0;i<getPlayer2SmPtr()->getPlayerUnits().size();i++)
     {
-        if(getPlayer2SmPtr()->isWolf1())
+        if(getPlayer2SmPtr()->isWolf1()) {
             getPlayer2SmPtr()->getPlayerUnits()[i]->availableMoves();
-        if(getPlayer2SmPtr()->getPlayerUnits()[i]->getFieldsThatUnitCanStandOn().empty())
-        {
-            counter1++;
+            if (getPlayer2SmPtr()->getPlayerUnits()[i]->getFieldsThatUnitCanStandOn().empty()) {
+                counter1++;
+            }
         }
-        if(!getPlayer2SmPtr()->isWolf1())
+
+        if(!getPlayer2SmPtr()->isWolf1()) {
             getPlayer2SmPtr()->getPlayerUnits()[i]->availableMoves();
-        if(getPlayer2SmPtr()->getPlayerUnits()[i]->getFieldsThatUnitCanStandOn().empty())
-        {
-            counter2++;
+            if (getPlayer2SmPtr()->getPlayerUnits()[i]->getFieldsThatUnitCanStandOn().empty()) {
+                counter2++;
+            }
         }
         getPlayer2SmPtr()->getPlayerUnits()[i]->getFieldsThatUnitCanStandOn();
     }
     if(counter1 == 1)
     {
+        userInterface.drawBoard();
         std::cout << "THE GAME HAS ENDED, WOLF HAS NO MOVES. SHEEP WIN!";
         exit(0);
     }
     if(counter2 == 4)
     {
+        userInterface.drawBoard();
         std::cout << "THE GAME HAS ENDED, SHEEP HAS NO MOVES. WOLF WIN!";
         exit(0);
     }
