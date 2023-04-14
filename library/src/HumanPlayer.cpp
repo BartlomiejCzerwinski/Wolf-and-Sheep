@@ -60,7 +60,7 @@ void HumanPlayer::move() {
     else
     {
         sheepChoose:
-        std::cout << "Select sheep that you want to move : " << std::endl;
+        std::cout << "Select sheep that you want to move : ";
         int temppp = 0;
         for (int i = 0; i < 4; i++) {
             temppp++;
